@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -33,15 +34,12 @@ namespace HomeWork
             string fileName = "Data.txt";
                 string filepath = "C:\\Users\\seidb\\OneDrive\\Masaüstü\\Projects";
                 string fullFilePath = Path.Combine(filepath, fileName);
-                if (!File.Exists(fullFilePath))
-                {
-                   File.Create(fullFilePath);
-                    File.WriteAllText(fullFilePath, strserialize);
-                }
-                else
-                {
-                    File.WriteAllText(fullFilePath, strserialize);
-                }
+            if (!Directory.Exists(filepath))
+            {
+                Directory.CreateDirectory(filepath);
+            }
+
+            File.WriteAllText(fullFilePath, strserialize);
                 Console.WriteLine("Adding text to file successful");
           
           
