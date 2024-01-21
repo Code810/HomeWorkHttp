@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,16 +17,16 @@ namespace HomeWork
             HttpClient httpClient = new HttpClient();
             string apiUrl = "https://jsonplaceholder.typicode.com/posts";
             HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+           
 
             if (response.IsSuccessStatusCode)
             {
-                string responseContent = await response.Content.ReadAsStringAsync();
+                var userList = await response.Content.ReadFromJsonAsync<List<User>>();
 
-                var deptList = JsonSerializer.Deserialize<List<User>>(responseContent);
-                var newlist = deptList.FindAll(predicate);
-                return newlist;
+                var filteredList = userList.FindAll(predicate);
+                return filteredList;
             }
-            else return null;
+             return null;
         }
             
         public  void AddDataFile(List<User> data)
